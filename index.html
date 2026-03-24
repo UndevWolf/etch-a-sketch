@@ -10,8 +10,10 @@
 
 <body>
     <h1>Etch-A-Sketch</h1>
-    <input type="range" id="slider" min="16" max="100" value="64">
-    <span id="slider-value">64</span>
+    <div>
+        <input type="range" id="slider" min="16" max="100" value="64">
+        <p>Grid Size: <span id="slider-value">64</span></p>
+    </div>
     <div class="content">
         <div class="buttons">
             <button id="blackBtn">Black</button>
@@ -21,6 +23,7 @@
             <button id="yellowBtn">Yellow</button>
             <button id="purpleBtn">Purple</button>
             <button id="randomBtn">Rainbow</button>
+            <button id="eraser">Eraser</button>
             <button id="reset">Reset</button>
         </div>
 

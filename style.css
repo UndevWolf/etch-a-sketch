@@ -5,6 +5,13 @@ body {
     flex-direction:column;
     gap:10px;
 }
+@font-face {
+  font-family: Notepen; 
+  src: url(assets/Notepen.otf);  /* https://bestfont.gumroad.com/l/Notepen */
+}
+* {
+    font-family: Notepen;
+}
 .container {
     display:flex;
     flex-wrap:wrap;
@@ -21,6 +28,62 @@ body {
     flex-flow: column wrap;
     gap: 10px;
 }
+button {
+    border-radius: 25px;
+    height: 50px;
+    width: 100px;
+    font-size: 25px;
+}
 .black {
     background-color:rgba(0, 0, 0);
+}
+#blackBtn {
+    background-color:black;
+    color:white;
+}
+#redBtn {
+    background-color:red;
+    color:white;
+}
+#greenBtn {
+    background-color:green;
+    color:white;
+}
+#blueBtn {
+    background-color:blue;
+    color:white;
+}
+#yellowBtn {
+    background-color:yellow;
+}
+#purpleBtn {
+    background-color:purple;
+    color:white;
+}
+#randomBtn {
+    background: linear-gradient(-45deg, #ff0000, #f7f200, #00fa60, #0400ff );
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+h1 {
+    font-size: 70px;
+    font-weight:bold;
+    margin:0;
+}
+div > p {
+    font-size: 20px;
+    text-align:center;
 }

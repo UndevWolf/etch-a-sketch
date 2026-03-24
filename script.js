@@ -10,6 +10,8 @@ const blueBtn = document.querySelector("#blueBtn");
 const yellowBtn = document.querySelector("#yellowBtn");
 const purpleBtn = document.querySelector("#purpleBtn");
 const randomBtn = document.querySelector("#randomBtn");
+const eraser = document.querySelector("#eraser");
+
 let penChoice = 0;
 
 // Returns a random RGB color
@@ -56,6 +58,9 @@ c.forEach(c => c.addEventListener("mouseenter", (e) => {
     else if (penChoice == 7) {
         e.target.classList.remove("black");
         e.target.style.backgroundColor = generateRandomRGB();
+    }
+    else if (penChoice == 8) {
+        e.target.style.background = "white";
     }
     else {
         e.target.classList.add("black");
@@ -114,5 +119,10 @@ purpleBtn.addEventListener("click", () => {
 
 randomBtn.addEventListener("click", () => {
     penChoice = 7;
+    sketch(penChoice);
+});
+
+eraser.addEventListener("click", () => {
+    penChoice = 8;
     sketch(penChoice);
 });
