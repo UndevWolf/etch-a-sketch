@@ -9,6 +9,7 @@ const greenBtn = document.querySelector("#greenBtn");
 const blueBtn = document.querySelector("#blueBtn");
 const yellowBtn = document.querySelector("#yellowBtn");
 const purpleBtn = document.querySelector("#purpleBtn");
+const opacity = document.querySelector("#opacity");
 const randomBtn = document.querySelector("#randomBtn");
 const eraser = document.querySelector("#eraser");
 
@@ -29,41 +30,57 @@ function newGrid(gridSize) {
         item.classList.add("cell");
         item.style.width = (600/gridSize) + "px";
         item.style.height = (600/gridSize) + "px";
+        item.style.opacity = .10;
         container.appendChild(item);
 }};
 
 // adds a color to a cell when mouse hovers.
-function sketch(penChoice = 1) {
+function sketch(penChoice = 1,opacityReset = true) {
 const c = document.querySelectorAll(".cell");
 c.forEach(c => c.addEventListener("mouseenter", (e) => {
-    // Pen color is assigned via their number as seen in their button function.
-    if (penChoice == 1) {
-        e.target.style.background = "black";
-    }
-    else if (penChoice == 2) {
-        e.target.style.background = "red";
-    }
-    else if (penChoice == 3) {
-        e.target.style.background = "green";
-    }
-    else if (penChoice == 4) {
-        e.target.style.background = "blue";
-    }
-    else if (penChoice == 5) {
-        e.target.style.background = "yellow";
-    }
-    else if (penChoice == 6) {
-        e.target.style.background = "purple";
-    }
-    else if (penChoice == 7) {
-        e.target.classList.remove("black");
-        e.target.style.backgroundColor = generateRandomRGB();
-    }
-    else if (penChoice == 8) {
-        e.target.style.background = "white";
+    const cellStyle = e.target.style;
+
+    // Resets the opacity of the pen to 0.1 when clicking the color button again.
+    let currentOpacity = opacityReset;
+    if (opacityReset == false) {
+        currentOpacity = parseFloat(e.target.style.opacity) - 0.1;
     }
     else {
-        e.target.classList.add("black");
+        currentOpacity = parseFloat(e.target.style.opacity);
+    }
+
+    let newOpacity = Math.min(currentOpacity + 0.1, 1.0)
+    e.target.style.opacity = newOpacity;
+    
+
+    // Pen color is assigned via their number as seen in their button function.
+    if (penChoice == 1) {
+        cellStyle.background = "black";
+    }
+    else if (penChoice == 2) {
+        cellStyle.background = "red";
+    }
+    else if (penChoice == 3) {
+        cellStyle.background = "green";
+    }
+    else if (penChoice == 4) {
+        cellStyle.background = "blue";
+    }
+    else if (penChoice == 5) {
+        cellStyle.background = "yellow";
+    }
+    else if (penChoice == 6) {
+        cellStyle.background = "purple";
+    }
+    else if (penChoice == 7) {
+        cellStyle.backgroundColor = generateRandomRGB();
+    }
+    else if (penChoice == 9) {
+        e.target.classList.add("opaque");
+    }
+    else if (penChoice == 8) {
+        e.target.classList.remove("opaque");
+        cellStyle.background = "";
     }
 }))};
 
@@ -83,43 +100,47 @@ slider.addEventListener("input", () => {
 reset.addEventListener("click", () => {
     container.replaceChildren();
     newGrid(slider.value);
-    sketch(penChoice);
+    sketch();
 });
 
 // Button functions to change the pen color.
 blackBtn.addEventListener("click", () => {
     penChoice = 1;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
 redBtn.addEventListener("click", () => {
     penChoice = 2;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
 greenBtn.addEventListener("click", () => {
     penChoice = 3;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
 blueBtn.addEventListener("click", () => {
     penChoice = 4;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
 yellowBtn.addEventListener("click", () => {
     penChoice = 5;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
 purpleBtn.addEventListener("click", () => {
     penChoice = 6;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
+opacity.addEventListener("click", () => {
+    penChoice = 9;
+    sketch(penChoice,false);
+});
 randomBtn.addEventListener("click", () => {
     penChoice = 7;
-    sketch(penChoice);
+    sketch(penChoice,false);
 });
 
 eraser.addEventListener("click", () => {
