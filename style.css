@@ -1,3 +1,9 @@
+body {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
 .container {
     display:flex;
     flex-wrap:wrap;
@@ -6,5 +12,5 @@
     height: 800px;
 }
 .black {
-    background-color:black;
+    background-color:rgba(0, 0, 0);
 }
