@@ -3,13 +3,23 @@ body {
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    gap:10px;
 }
 .container {
     display:flex;
     flex-wrap:wrap;
     border: 1px solid black;
-    width: 800px;
-    height: 800px;
+    width: 600px;
+    height: 600px;
+}
+.content {
+    display:flex;
+    gap : 10px;
+}
+.buttons {
+    display:flex;
+    flex-flow: column wrap;
+    gap: 10px;
 }
 .black {
     background-color:rgba(0, 0, 0);
