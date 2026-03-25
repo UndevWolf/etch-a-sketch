@@ -2,7 +2,6 @@ const container = document.querySelector(".container");
 const slider = document.querySelector("#slider");
 const sliderValue = document.querySelector("#slider-value");
 const reset = document.querySelector("#reset");
-const cell = document.querySelectorAll(".cell");
 const blackBtn = document.querySelector("#blackBtn");
 const redBtn = document.querySelector("#redBtn");
 const greenBtn = document.querySelector("#greenBtn");
@@ -13,7 +12,7 @@ const opacity = document.querySelector("#opacity");
 const randomBtn = document.querySelector("#randomBtn");
 const eraser = document.querySelector("#eraser");
 
-let penChoice = 0;
+let penChoice = 1;
 
 // Returns a random RGB color
 function generateRandomRGB(opacity = 1) {
@@ -30,59 +29,60 @@ function newGrid(gridSize) {
         item.classList.add("cell");
         item.style.width = (600/gridSize) + "px";
         item.style.height = (600/gridSize) + "px";
-        item.style.opacity = .10;
         container.appendChild(item);
 }};
 
+let isActive = false;
+container.onmousedown = () => {
+    isActive = true;
+}
+window.onmouseup = () => {
+    isActive = false;
+}
 // adds a color to a cell when mouse hovers.
-function sketch(penChoice = 1,opacityReset = true) {
-const c = document.querySelectorAll(".cell");
-c.forEach(c => c.addEventListener("mouseenter", (e) => {
-    const cellStyle = e.target.style;
+function sketch(penChoice = 1,opacityReset = .1) {
+    const c = document.querySelectorAll(".cell");
+    c.forEach(c => {
+        c.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            e.target.style.background = choosePen();
+            });
+        c.addEventListener("mouseenter", (e) => {
+            if (isActive == true) {
+                e.target.style.background = choosePen();
+            }});
+        
 
-    // Resets the opacity of the pen to 0.1 when clicking the color button again.
-    let currentOpacity = opacityReset;
-    if (opacityReset == false) {
-        currentOpacity = parseFloat(e.target.style.opacity) - 0.1;
-    }
-    else {
-        currentOpacity = parseFloat(e.target.style.opacity);
-    }
+        function choosePen() {
+                // Pen color is assigned via their number as seen in their button function.
+            switch (penChoice) {
+                case 1: return "black";
+                case 2: return "red";
+                case 3: return "green";
+                case 4: return "blue";
+                case 5: return "yellow";
+                case 6: return "purple";
+                case 7: return generateRandomRGB();
+                case 8: return "";
+                case 9:
+                    
+                    e.target.style.opacity = 1;
 
-    let newOpacity = Math.min(currentOpacity + 0.1, 1.0)
-    e.target.style.opacity = newOpacity;
-    
+                    // Resets the opacity of the pen to 0.1 when clicking the color button again.
+                    currentOpacity = parseFloat(e.target.style.opacity) - .9;
+                    if (opacityReset == false) {
+                        currentOpacity = parseFloat(e.target.style.opacity) - 0.1;
+                    }
+                    else {
+                        currentOpacity = parseFloat(e.target.style.opacity);
+                    }
 
-    // Pen color is assigned via their number as seen in their button function.
-    if (penChoice == 1) {
-        cellStyle.background = "black";
-    }
-    else if (penChoice == 2) {
-        cellStyle.background = "red";
-    }
-    else if (penChoice == 3) {
-        cellStyle.background = "green";
-    }
-    else if (penChoice == 4) {
-        cellStyle.background = "blue";
-    }
-    else if (penChoice == 5) {
-        cellStyle.background = "yellow";
-    }
-    else if (penChoice == 6) {
-        cellStyle.background = "purple";
-    }
-    else if (penChoice == 7) {
-        cellStyle.backgroundColor = generateRandomRGB();
-    }
-    else if (penChoice == 9) {
-        e.target.classList.add("opaque");
-    }
-    else if (penChoice == 8) {
-        e.target.classList.remove("opaque");
-        cellStyle.background = "";
-    }
-}))};
+                    let newOpacity = Math.min(currentOpacity + 0.1, 1.0)
+                    e.target.style.opacity = newOpacity;
+                    break;
+                
+        }};
+})};
 
 // Initial run.
 newGrid(slider.value);
@@ -134,10 +134,6 @@ purpleBtn.addEventListener("click", () => {
     sketch(penChoice,false);
 });
 
-opacity.addEventListener("click", () => {
-    penChoice = 9;
-    sketch(penChoice,false);
-});
 randomBtn.addEventListener("click", () => {
     penChoice = 7;
     sketch(penChoice,false);
@@ -145,5 +141,10 @@ randomBtn.addEventListener("click", () => {
 
 eraser.addEventListener("click", () => {
     penChoice = 8;
-    sketch(penChoice);
+    sketch(penChoice,false);
+});
+
+opacity.addEventListener("click", () => {
+    penChoice = 9;
+    sketch(penChoice,false);
 });
