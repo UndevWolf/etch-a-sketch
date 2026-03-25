@@ -63,7 +63,10 @@ function sketch(penChoice = 1,opacityReset = .1) {
         })
         c.addEventListener("touchmove", (e) => {
             if (isActive == true) {
+                c.addEventListener("mouseenter", (e) => {
+            
                 e.target.style.background = choosePen();
+            });
             }});
 
         function choosePen() {
