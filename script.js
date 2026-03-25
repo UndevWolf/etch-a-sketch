@@ -39,6 +39,12 @@ container.onmousedown = () => {
 window.onmouseup = () => {
     isActive = false;
 }
+container.ontouchstart = () => {
+    isActive = true;
+}
+container.ontouchend = () => {
+    isActive = false;
+}
 // adds a color to a cell when mouse hovers.
 function sketch(penChoice = 1,opacityReset = .1) {
     const c = document.querySelectorAll(".cell");
@@ -51,7 +57,14 @@ function sketch(penChoice = 1,opacityReset = .1) {
             if (isActive == true) {
                 e.target.style.background = choosePen();
             }});
-        
+        c.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            e.target.style.background = choosePen();
+        })
+        c.addEventListener("touchmove", (e) => {
+            if (isActive == true) {
+                e.target.style.background = choosePen();
+            }});
 
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
