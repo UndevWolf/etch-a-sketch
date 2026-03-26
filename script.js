@@ -20,7 +20,7 @@ function generateRandomRGB(opacity = 1) {
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
   return `rgb(${r}, ${g}, ${b}, ${opacity})`;
-}
+};
 
 // creates a square grid depending on the gridSize variable and adds it to the DOM.
 function newGrid(gridSize) {
@@ -29,6 +29,7 @@ function newGrid(gridSize) {
         item.classList.add("cell");
         item.style.width = (600/gridSize) + "px";
         item.style.height = (600/gridSize) + "px";
+        item.style.opacity = 1;
         container.appendChild(item);
 }};
 
@@ -61,7 +62,7 @@ function sketch(penChoice = 1,opacityReset = .1) {
             e.preventDefault();
             e.target.style.background = choosePen();
         })
-        c.addEventListener("touchmove", touchHandler(e));
+        c.addEventListener("touchmove", touchHandler);
 
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
@@ -75,9 +76,6 @@ function sketch(penChoice = 1,opacityReset = .1) {
                 case 7: return generateRandomRGB();
                 case 8: return "";
                 case 9:
-                    
-                    e.target.style.opacity = 1;
-
                     // Resets the opacity of the pen to 0.1 when clicking the color button again.
                     currentOpacity = parseFloat(e.target.style.opacity) - .9;
                     if (opacityReset == false) {
@@ -98,7 +96,7 @@ function sketch(penChoice = 1,opacityReset = .1) {
             if (fingerCoords && isActive) {
                 e.target.style.background = choosePen();
             }
-        }
+        };
 })};
 
 // Initial run.
