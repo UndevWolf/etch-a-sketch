@@ -96,7 +96,7 @@ slider.addEventListener("input", () => {
     container.replaceChildren();
     sliderValue.textContent = slider.value;
     newGrid(slider.value);
-    sketch(penChoice);
+    sketch(1);
 });
 
 // Button function to change the pen color.
