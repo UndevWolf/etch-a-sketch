@@ -47,7 +47,7 @@ container.ontouchend = () => {
     isActive = false;
 }
 // adds a color to a cell when mouse hovers.
-function sketch(penChoice = 1,opacityReset = .1) {
+function sketch(penChoice = 1,opacityReset = true) {
     const c = document.querySelectorAll(".cell");
     c.forEach(c => {
         c.addEventListener("mousedown", (e) => {
@@ -62,7 +62,7 @@ function sketch(penChoice = 1,opacityReset = .1) {
             e.preventDefault();
             e.target.style.background = choosePen();
         })
-        c.addEventListener("touchmove", touchHandler);
+        container.addEventListener("touchmove", touchHandler);
 
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
@@ -77,16 +77,18 @@ function sketch(penChoice = 1,opacityReset = .1) {
                 case 8: return "";
                 case 9:
                     // Resets the opacity of the pen to 0.1 when clicking the color button again.
-                    currentOpacity = parseFloat(e.target.style.opacity) - .9;
-                    if (opacityReset == false) {
-                        currentOpacity = parseFloat(e.target.style.opacity) - 0.1;
+                    console.log("initial " + c.style.opacity)
+                    c.style.opacity = parseFloat(c.style.opacity) - 0.90;
+                    console.log("changed " + c.style.opacity)
+                    if (currentOpacity < 1) {
+                        newOpacity = currentOpacity + 0.1;
+                        c.style.opacity = newOpacity;
                     }
                     else {
-                        currentOpacity = parseFloat(e.target.style.opacity);
+                        c.style.opacity = currentOpacity;
                     }
-
-                    let newOpacity = Math.min(currentOpacity + 0.1, 1.0)
-                    e.target.style.opacity = newOpacity;
+                    
+                    console.log(c.style.opacity)
                     break;     
         }};
 
@@ -121,7 +123,7 @@ reset.addEventListener("click", () => {
 // Button functions to change the pen color.
 blackBtn.addEventListener("click", () => {
     penChoice = 1;
-    sketch(penChoice,false);
+    sketch(penChoice,true);
 });
 
 redBtn.addEventListener("click", () => {
