@@ -40,12 +40,7 @@ container.onmousedown = () => {
 window.onmouseup = () => {
     isActive = false;
 }
-container.ontouchstart = () => {
-    isActive = true;
-}
-container.ontouchend = () => {
-    isActive = false;
-}
+
 // adds a color to a cell when mouse hovers.
 function sketch(penChoice = 1) {
     const c = document.querySelectorAll(".cell");
@@ -58,10 +53,7 @@ function sketch(penChoice = 1) {
             if (isActive == true) {
                 e.target.style.background = choosePen();
             }});
-        c.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            e.target.style.background = choosePen();
-        })
+
         container.addEventListener("touchmove", touchHandler);
 
         function choosePen() {
@@ -76,29 +68,32 @@ function sketch(penChoice = 1) {
                 case 7: return generateRandomRGB();
                 case 8: return "";
                 case 9:
-                    // Resets the opacity of the pen to 0.1 when clicking the color button again.
-                    console.log("initial " + c.style.opacity)
-                    c.style.opacity = parseFloat(c.style.opacity) - 0.90;
-                    console.log("changed " + c.style.opacity)
-                    if (currentOpacity < 1) {
-                        newOpacity = currentOpacity + 0.1;
+                    // Increase opacity to max starting from 0.1
+                    let currentOpacity = parseFloat(c.style.opacity);
+                    if (c.classList.contains("full")) {
+                        let newOpacity = currentOpacity + 0.1;
                         c.style.opacity = newOpacity;
                     }
                     else {
-                        c.style.opacity = currentOpacity;
+                        c.style.opacity = .10;
+                        c.classList.add("full");
                     }
-                    
-                    console.log(c.style.opacity)
-                    break;     
+                    break; 
         }};
 
-        function touchHandler(e) {
-            let touch = e.touches[0];
-            let fingerCoords = document.elementFromPoint(touch.clientX, touch.clientY);
-            if (fingerCoords && isActive) {
-                e.target.style.background = choosePen();
-            }
-        };
+        function touchHandler(e) {   // https://gist.github.com/VehpuS/6fd5dca2ea8cd0eb0471
+                // get the touch element
+                let touch = e.touches[0];
+
+                // get the DOM element
+                let touchedCell = document.elementFromPoint(touch.clientX, touch.clientY);
+
+                // make sure an element was found - some areas on the page may have no elements
+                if (touchedCell) {
+                    // interact with the DOM element
+                    touchedCell.style.background = choosePen();
+                }
+			};
 })};
 
 // Initial run.
