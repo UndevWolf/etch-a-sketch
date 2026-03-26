@@ -61,10 +61,7 @@ function sketch(penChoice = 1,opacityReset = .1) {
             e.preventDefault();
             e.target.style.background = choosePen();
         })
-        c.addEventListener("touchenter", (e) => {
-            if (isActive == true) {
-                e.target.style.background = choosePen();
-            }});
+        c.addEventListener("touchmove", touchHandler(e));
 
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
@@ -92,9 +89,16 @@ function sketch(penChoice = 1,opacityReset = .1) {
 
                     let newOpacity = Math.min(currentOpacity + 0.1, 1.0)
                     e.target.style.opacity = newOpacity;
-                    break;
-                
+                    break;     
         }};
+
+        function touchHandler(e) {
+            let touch = e.touches[0];
+            let fingerCoords = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (fingerCoords && isActive) {
+                e.target.style.background = choosePen();
+            }
+        }
 })};
 
 // Initial run.
