@@ -44,7 +44,6 @@ function sketch(penChoice = 1) {
                 e.target.style.background = choosePen();
             }});
 
-        container.addEventListener("touchmove", touchHandler);
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
             switch (penChoice) {
@@ -70,20 +69,21 @@ function sketch(penChoice = 1) {
                     break; 
         }};
 
-        // Implement touch event
-        function touchHandler(e) {   // https://gist.github.com/VehpuS/6fd5dca2ea8cd0eb0471
-            // get the touch element
-            let touch = e.touches[0];
+        // // Implement touch event
+        // container.addEventListener("touchmove", touchHandler);
+        // function touchHandler(e) {   // https://gist.github.com/VehpuS/6fd5dca2ea8cd0eb0471
+        //     // get the touch element
+        //     let touch = e.touches[0];
 
-            // get the DOM element
-            let touchedCell = document.elementFromPoint(touch.clientX, touch.clientY);
+        //     // get the DOM element
+        //     let touchedCell = document.elementFromPoint(touch.clientX, touch.clientY);
 
-            // make sure an element was found - some areas on the page may have no elements
-            if (touchedCell) {
-                // interact with the DOM element
-                touchedCell.style.background = choosePen();
-            }
-        };
+        //     // make sure an element was found - some areas on the page may have no elements
+        //     if (touchedCell) {
+        //         // interact with the DOM element
+        //         touchedCell.style.background = choosePen();
+        //     }
+        // };
 
 })};
 
