@@ -47,7 +47,7 @@ container.ontouchend = () => {
     isActive = false;
 }
 // adds a color to a cell when mouse hovers.
-function sketch(penChoice = 1,opacityReset = true) {
+function sketch(penChoice = 1) {
     const c = document.querySelectorAll(".cell");
     c.forEach(c => {
         c.addEventListener("mousedown", (e) => {
@@ -117,51 +117,51 @@ slider.addEventListener("input", () => {
 reset.addEventListener("click", () => {
     container.replaceChildren();
     newGrid(slider.value);
-    sketch();
+    sketch(penChoice);
 });
 
 // Button functions to change the pen color.
 blackBtn.addEventListener("click", () => {
     penChoice = 1;
-    sketch(penChoice,true);
+    sketch(penChoice);
 });
 
 redBtn.addEventListener("click", () => {
     penChoice = 2;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 greenBtn.addEventListener("click", () => {
     penChoice = 3;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 blueBtn.addEventListener("click", () => {
     penChoice = 4;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 yellowBtn.addEventListener("click", () => {
     penChoice = 5;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 purpleBtn.addEventListener("click", () => {
     penChoice = 6;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 randomBtn.addEventListener("click", () => {
     penChoice = 7;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 eraser.addEventListener("click", () => {
     penChoice = 8;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 opacity.addEventListener("click", () => {
     penChoice = 9;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
