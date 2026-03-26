@@ -1,17 +1,7 @@
 const container = document.querySelector(".container");
 const slider = document.querySelector("#slider");
 const sliderValue = document.querySelector("#slider-value");
-const reset = document.querySelector("#reset");
-const blackBtn = document.querySelector("#blackBtn");
-const redBtn = document.querySelector("#redBtn");
-const greenBtn = document.querySelector("#greenBtn");
-const blueBtn = document.querySelector("#blueBtn");
-const yellowBtn = document.querySelector("#yellowBtn");
-const purpleBtn = document.querySelector("#purpleBtn");
-const opacity = document.querySelector("#opacity");
-const randomBtn = document.querySelector("#randomBtn");
-const eraser = document.querySelector("#eraser");
-
+const btn = document.querySelectorAll(".btn");
 let penChoice = 1;
 
 // Returns a random RGB color
@@ -54,7 +44,7 @@ function sketch(penChoice = 1) {
                 e.target.style.background = choosePen();
             }});
 
-
+        container.addEventListener("touchmove", touchHandler);
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
             switch (penChoice) {
@@ -69,7 +59,7 @@ function sketch(penChoice = 1) {
                 case 9:
                     // Increase opacity to max starting from 0.1
                     let currentOpacity = parseFloat(c.style.opacity);
-                    if ((currentOpacity < 99) && (c.classList.contains("full"))) {
+                    if (c.classList.contains("full")) {
                         let newOpacity = currentOpacity + 0.1;
                         c.style.opacity = newOpacity;
                     }
@@ -77,8 +67,24 @@ function sketch(penChoice = 1) {
                         c.style.opacity = .10;
                         c.classList.add("full");
                     }
-                    break;     
+                    break; 
         }};
+
+        // Implement touch event
+        function touchHandler(e) {   // https://gist.github.com/VehpuS/6fd5dca2ea8cd0eb0471
+            // get the touch element
+            let touch = e.touches[0];
+
+            // get the DOM element
+            let touchedCell = document.elementFromPoint(touch.clientX, touch.clientY);
+
+            // make sure an element was found - some areas on the page may have no elements
+            if (touchedCell) {
+                // interact with the DOM element
+                touchedCell.style.background = choosePen();
+            }
+        };
+
 })};
 
 // Initial run.
@@ -93,55 +99,24 @@ slider.addEventListener("input", () => {
     sketch(1);
 });
 
-// Reset drawing board.
-reset.addEventListener("click", () => {
-    container.replaceChildren();
-    newGrid(slider.value);
-    sketch();
-});
+// Button function to change the pen color.
+btn.forEach(b => b.addEventListener("click", (e) => {
+    let pen = 1;
+    switch (e.target.value) {
+        case "black": pen = 1; break;
+        case "red": pen = 2; break;
+        case "green": pen = 3; break;
+        case "blue": pen = 4; break;
+        case "yellow": pen = 5; break;
+        case "purple": pen = 6; break;
+        case "rainbow": pen = 7; break;
+        case "eraser": pen = 8; break;
+        case "opacity": pen = 9; break;
+        case "reset":
+            container.replaceChildren();
+            newGrid(slider.value);
+            break;
+    }
+    sketch(pen);
+}));
 
-// Button functions to change the pen color.
-blackBtn.addEventListener("click", () => {
-    penChoice = 1;
-    sketch(penChoice);
-});
-
-redBtn.addEventListener("click", () => {
-    penChoice = 2;
-    sketch(penChoice);
-});
-
-greenBtn.addEventListener("click", () => {
-    penChoice = 3;
-    sketch(penChoice);
-});
-
-blueBtn.addEventListener("click", () => {
-    penChoice = 4;
-    sketch(penChoice);
-});
-
-yellowBtn.addEventListener("click", () => {
-    penChoice = 5;
-    sketch(penChoice);
-});
-
-purpleBtn.addEventListener("click", () => {
-    penChoice = 6;
-    sketch(penChoice);
-});
-
-randomBtn.addEventListener("click", () => {
-    penChoice = 7;
-    sketch(penChoice);
-});
-
-eraser.addEventListener("click", () => {
-    penChoice = 8;
-    sketch(penChoice);
-});
-
-opacity.addEventListener("click", () => {
-    penChoice = 9;
-    sketch(penChoice);
-});
