@@ -40,14 +40,9 @@ container.onmousedown = () => {
 window.onmouseup = () => {
     isActive = false;
 }
-container.ontouchstart = () => {
-    isActive = true;
-}
-container.ontouchend = () => {
-    isActive = false;
-}
+
 // adds a color to a cell when mouse hovers.
-function sketch(penChoice = 1,opacityReset = true) {
+function sketch(penChoice = 1) {
     const c = document.querySelectorAll(".cell");
     c.forEach(c => {
         c.addEventListener("mousedown", (e) => {
@@ -58,11 +53,7 @@ function sketch(penChoice = 1,opacityReset = true) {
             if (isActive == true) {
                 e.target.style.background = choosePen();
             }});
-        c.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            e.target.style.background = choosePen();
-        })
-        container.addEventListener("touchmove", touchHandler);
+
 
         function choosePen() {
                 // Pen color is assigned via their number as seen in their button function.
@@ -76,29 +67,18 @@ function sketch(penChoice = 1,opacityReset = true) {
                 case 7: return generateRandomRGB();
                 case 8: return "";
                 case 9:
-                    // Resets the opacity of the pen to 0.1 when clicking the color button again.
-                    console.log("initial " + c.style.opacity)
-                    c.style.opacity = parseFloat(c.style.opacity) - 0.90;
-                    console.log("changed " + c.style.opacity)
-                    if (currentOpacity < 1) {
-                        newOpacity = currentOpacity + 0.1;
+                    // Increase opacity to max starting from 0.1
+                    let currentOpacity = parseFloat(c.style.opacity);
+                    if ((currentOpacity < 99) && (c.classList.contains("full"))) {
+                        let newOpacity = currentOpacity + 0.1;
                         c.style.opacity = newOpacity;
                     }
                     else {
-                        c.style.opacity = currentOpacity;
+                        c.style.opacity = .10;
+                        c.classList.add("full");
                     }
-                    
-                    console.log(c.style.opacity)
                     break;     
         }};
-
-        function touchHandler(e) {
-            let touch = e.touches[0];
-            let fingerCoords = document.elementFromPoint(touch.clientX, touch.clientY);
-            if (fingerCoords && isActive) {
-                e.target.style.background = choosePen();
-            }
-        };
 })};
 
 // Initial run.
@@ -110,7 +90,7 @@ slider.addEventListener("input", () => {
     container.replaceChildren();
     sliderValue.textContent = slider.value;
     newGrid(slider.value);
-    sketch(penChoice);
+    sketch(1);
 });
 
 // Reset drawing board.
@@ -123,45 +103,45 @@ reset.addEventListener("click", () => {
 // Button functions to change the pen color.
 blackBtn.addEventListener("click", () => {
     penChoice = 1;
-    sketch(penChoice,true);
+    sketch(penChoice);
 });
 
 redBtn.addEventListener("click", () => {
     penChoice = 2;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 greenBtn.addEventListener("click", () => {
     penChoice = 3;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 blueBtn.addEventListener("click", () => {
     penChoice = 4;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 yellowBtn.addEventListener("click", () => {
     penChoice = 5;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 purpleBtn.addEventListener("click", () => {
     penChoice = 6;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 randomBtn.addEventListener("click", () => {
     penChoice = 7;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 eraser.addEventListener("click", () => {
     penChoice = 8;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
 
 opacity.addEventListener("click", () => {
     penChoice = 9;
-    sketch(penChoice,false);
+    sketch(penChoice);
 });
