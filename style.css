@@ -21,13 +21,13 @@ body {
 }
 .animation {
     position:relative;
-    width:700px;
+    width:800px;
 }
 .content {
     display:flex;
     gap : 10px;
     position:relative;
-    width:700px;
+    width:800px;
     position:absolute;
     left:0;
 }
