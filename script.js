@@ -2,6 +2,7 @@ const container = document.querySelector(".container");
 const slider = document.querySelector("#slider");
 const sliderValue = document.querySelector("#slider-value");
 const btn = document.querySelectorAll(".btn");
+const content = document.querySelector(".content");
 let penChoice = 1;
 
 // Returns a random RGB color
@@ -113,10 +114,32 @@ btn.forEach(b => b.addEventListener("click", (e) => {
         case "eraser": pen = 8; break;
         case "opacity": pen = 9; break;
         case "reset":
+            animate();
+            setTimeout(() => {
             container.replaceChildren();
             newGrid(slider.value);
+            }, 500);
             break;
-    }
+    };
     sketch(pen);
 }));
 
+function animate() {
+    let id = null;
+    let pos = 0;
+    let repetition = 0;
+    clearInterval(id);
+    id = setInterval(() => {
+        if (repetition == 5) {
+            content.style.left = "20px";
+            clearInterval(id);}
+        else if (pos == 10){
+           pos = 0;
+           repetition++;
+        }   
+        else {
+            pos++;
+            content.style.left = pos + "px";
+        }
+     } , 1)
+    };
